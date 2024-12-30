@@ -17,9 +17,20 @@ class ViewController: UIViewController {
     }
 
     @IBAction func keyPressed(_ sender: UIButton) {
-    
+        print(sender)
+        sender.alpha = 0.5
+        sender.tintColor = .clear
         playSound(pressedKey: sender.currentTitle!)
-        
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            //Bring's sender's opacity back up to fully opaque.
+            
+            UIView.animate(withDuration: 0.3) {
+                      sender.alpha = 1.0
+                  }
+        }
+//        sender.alpha = 1.0
+//        sender.backgroundColor = UIColor
     }
     
     func playSound(pressedKey: String) {
@@ -27,6 +38,8 @@ class ViewController: UIViewController {
         let url = Bundle.main.url(forResource: "\(pressedKey)", withExtension: "wav")
         player = try! AVAudioPlayer(contentsOf: url!)
         player.play()
+
+        
                 
     }
 }
